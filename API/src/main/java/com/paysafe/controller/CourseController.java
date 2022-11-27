@@ -27,15 +27,12 @@ public class CourseController {
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_Admin')")
     public ResponseEntity<CoursesDTO> createCourse(@RequestBody CoursesDTO coursesDTO) {
-        System.out.println(coursesDTO.getCourseName());
-        System.out.println();
         this.courseService.create(coursesDTO);
         return new ResponseEntity<>(coursesDTO, HttpStatus.OK);
     }
 
-
     @GetMapping("")
-//    @PreAuthorize("hasRole('ROLE_Admin')")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     List<CourseTeacherAverageGradeDTO> all() {
         return this.courseService.getAllCourses();
     }

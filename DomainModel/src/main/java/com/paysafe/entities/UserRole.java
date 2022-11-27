@@ -1,9 +1,9 @@
 package com.paysafe.entities;
 
 public enum UserRole {
-    Student("ROLE_Student"),
-    Teacher("ROLE_Teacher"),
-    Admin("ROLE_Admin");
+    Student("Student"),
+    Teacher("Teacher"),
+    Admin("Admin");
 
     private final String name;
 

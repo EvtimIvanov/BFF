@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class JWTFilter extends OncePerRequestFilter {
@@ -45,7 +46,7 @@ public class JWTFilter extends OncePerRequestFilter {
                     .build();
             DecodedJWT jwt = verifier.verify(token);
             Claim email = jwt.getClaim("email");
-            String roles = jwt.getClaim("roles").toString();
+            List<String> roles = jwt.getClaim("roles").asList(String.class);
 
 
             UsernamePasswordAuthenticationToken userPassToken =
@@ -67,9 +68,10 @@ public class JWTFilter extends OncePerRequestFilter {
 
     }
 
-    private Collection<SimpleGrantedAuthority> mapRoles(String roles) {
-        List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority(roles));
-        return grantedAuthorities;
+    private Collection<SimpleGrantedAuthority> mapRoles(List<String> roles) {
+        return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+//        List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
+//        grantedAuthorities.add(new SimpleGrantedAuthority(roles));
+//        return grantedAuthorities;
     }
 }
