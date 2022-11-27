@@ -1,6 +1,5 @@
 **/build/**
 **/logs
-*.idea
 **.gradle/**
 management.h2.mv.db
 management.h2.trace.db
