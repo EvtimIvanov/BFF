@@ -1,0 +1,16 @@
+version: '3.1'
+services:
+  app:
+    container_name: student-management
+    image: student-management
+    build: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - h2db
+  h2db:
+    image: h2
+    environment:
+      - H2_PASSWORD=
+      - H2_USER=
+      - H2_DB=management.h2.mv.db
