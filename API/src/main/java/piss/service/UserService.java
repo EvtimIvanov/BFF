@@ -79,6 +79,8 @@ public class UserService {
             Teacher teacher = this.teacherRepository.findByEmail(email).get();
             String name = teacher.getName();
             userDTO.setUserName(name);
+        }else{
+            userDTO.setUserName("Admin");
         }
 
 
