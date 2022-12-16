@@ -112,7 +112,6 @@ public class CourseService {
             throw new IllegalArgumentException("Grade must be between 2.0 and 6.0");
 
         }
-        //TODO isoptional da opravq
         Grade grade = new Grade(student, course, newGrade);
         student.addGrade(grade);
         course.addGradeToStudent(student, grade);
@@ -228,6 +227,7 @@ public class CourseService {
                 this.courseRepository.getAllTeacherCourse(teacher.getId());
 
         for (CourseWithAverageGradeDTO course: list) {
+
             Double averageGrade = course.getAverageGrade();
             course.setAverageGrade(averageGrade);
         }

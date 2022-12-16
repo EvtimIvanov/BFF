@@ -44,7 +44,6 @@ public class CourseTeacherAverageGradeDTO {
         if(course.getTeacherOfTheCourse()!=null){
         this.teacherName = course.getTeacherOfTheCourse().getName();
         }
-        this.teacherName = "";
 
     }
 }
