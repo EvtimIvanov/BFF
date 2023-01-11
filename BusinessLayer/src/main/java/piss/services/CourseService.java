@@ -70,8 +70,8 @@ public class CourseService {
         }
 
         Course course = new Course(coursesDTO.getCourseName(), totalHours);
-
-
+        Teacher teacher = teacherRepository.findById(coursesDTO.getTeacherId()).get();
+        course.setTeacherOfTheCourse(teacher);
         return new CoursesDTO(this.courseRepository.save(course));
     }
 
@@ -235,9 +235,8 @@ public class CourseService {
                 this.courseRepository.getAllTeacherCourse(teacher.getId());
 
         for (CourseWithAverageGradeDTO course: list) {
-
-            Double averageGrade = course.getAverageGrade();
-            course.setAverageGrade(averageGrade);
+            Course currentCourse = this.courseRepository.findById(course.getCourseId()).get();
+            course.setAverageGrade(currentCourse.getAverageGradeForAll());
         }
 
         return list;

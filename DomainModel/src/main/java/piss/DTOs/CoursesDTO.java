@@ -8,6 +8,8 @@ public class CoursesDTO {
     private String courseName;
     private int totalHours;
 
+    private int teacherId;
+
     public CoursesDTO(String name, int totalHours, int id) {
         this.id = id;
         this.courseName = name;
@@ -42,5 +44,13 @@ public class CoursesDTO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(int teacherId) {
+        this.teacherId = teacherId;
     }
 }

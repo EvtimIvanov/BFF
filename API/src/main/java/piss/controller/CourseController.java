@@ -39,11 +39,10 @@ public class CourseController {
 
 
     @PostMapping("/course/{courseId}/addTeacher/{teacherId}")
-    @PreAuthorize("hasRole('ROLE_Admin')")
+    @PreAuthorize("hasAnyRole('ROLE_Student','ROLE_Teacher','ROLE_Admin')")
     public ResponseEntity<CourseTeacherDTO> addTeacherToCourse
             (@PathVariable int teacherId, @PathVariable int courseId) {
-
-
+        
         return new ResponseEntity<>(
                 courseService.addTeacherToCourseDTO(teacherId, courseId), HttpStatus.OK);
     }
