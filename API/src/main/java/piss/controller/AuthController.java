@@ -1,9 +1,12 @@
 package piss.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import piss.DTOs.LoginDTO;
 import piss.DTOs.RegisterUserDTO;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import piss.DTOs.StudentDTO;
+import piss.DTOs.TeacherDTO;
 import piss.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,12 +72,23 @@ public class AuthController {
 
     @PostMapping("/register")
     public void register(@RequestBody RegisterUserDTO registerUserDTO) {
+
         this.userService.register(registerUserDTO);
     }
 
     @GetMapping("/user/{userEmail}/role")
     public String getRole(@PathVariable String userEmail) {
         return this.userService.getRoleByEmail(userEmail);
+    }
+
+    @PostMapping("/user/changeRole/{userEmail}/Student")
+    public String changeRole(@PathVariable String userEmail, @RequestBody StudentDTO studentDTO) {
+        return this.userService.changeRole(userEmail, studentDTO);
+    }
+
+    @PostMapping("/user/changeRole/{userEmail}/Teacher")
+    public String changeRole(@PathVariable String userEmail, @RequestBody TeacherDTO teacherDTO) {
+        return this.userService.changeRole(userEmail, teacherDTO);
     }
 
 }

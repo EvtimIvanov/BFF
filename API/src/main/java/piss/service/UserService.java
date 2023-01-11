@@ -1,14 +1,13 @@
 package piss.service;
 
 import piss.DTOs.RegisterUserDTO;
+import piss.DTOs.StudentDTO;
+import piss.DTOs.TeacherDTO;
 import piss.DTOs.UserDTO;
 import piss.StudentRepository;
 import piss.TeacherRepository;
 import piss.UserRepository;
-import piss.entities.Student;
-import piss.entities.Teacher;
-import piss.entities.UserRole;
-import piss.entities.Users;
+import piss.entities.*;
 import piss.exceptions.EmailAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,7 +48,7 @@ public class UserService {
         Users user = new Users();
 
         user.setEmail(registerUserDTO.getEmail());
-        user.setUserRole(UserRole.Admin);
+        user.setUserRole(UserRole.Student);
 
         String encodedPassword = passwordEncoder.encode(registerUserDTO.getPassword());
 
@@ -86,5 +85,36 @@ public class UserService {
 
         return userDTO;
 
+    }
+
+    public String changeRole(String userEmail, StudentDTO studentDTO) {
+        Users user = this.userRepository.findByEmail(userEmail).get();
+        user.setUserRole(UserRole.Student);
+        userRepository.save(user);
+
+        Student student = new Student();
+        student.setAge(studentDTO.getAge());
+        student.setEmail(user.getEmail());
+        student.setName(studentDTO.getName());
+
+        studentRepository.save(student);
+
+        return student.getName();
+
+    }
+
+    public String changeRole(String userEmail, TeacherDTO teacherDTO) {
+        Users user = this.userRepository.findByEmail(userEmail).get();
+        user.setUserRole(UserRole.Teacher);
+        userRepository.save(user);
+
+        Teacher teacher = new Teacher();
+        teacher.setDegree(Degree.valueOf(teacherDTO.getDegree()));
+        teacher.setEmail(user.getEmail());
+        teacher.setName(teacherDTO.getName());
+
+        teacherRepository.save(teacher);
+
+        return teacher.getName();
     }
 }
